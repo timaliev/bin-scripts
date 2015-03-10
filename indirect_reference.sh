@@ -1,6 +1,8 @@
 #!/bin/sh
 
-#Indirect variable referencing.
+# Advanced shell scripting from http://tldp.org/LDP/abs/html/abs-guide.html
+
+# Indirect variable referencing.
 # This has a few of the attributes of references in C++.
 
 
