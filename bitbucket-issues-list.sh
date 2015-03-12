@@ -6,8 +6,6 @@ import scala.io.Source
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json._
 
-// Say hello to the first argument 
-
 object PrintBibucketIssues {
 
   	def main(args: Array[String]) {
@@ -18,37 +16,14 @@ object PrintBibucketIssues {
 			case _ => throw new IllegalArgumentException("Too many arguments. Use: " + args(0).toString + " [JSON file name]\n")
 		}
 
-		implicit val formats = DefaultFormats // {
-			// override def dateFormatter = new SimpleDateFormat("yyyy-MM-dd")
-		// }
-		case class BBIssue(
-			assignee: Option[String],
-			component: Option[String],
-			content: Option[String],
-			content_updated_on: String,
-			created_on: String,
-			edited_on: Option[String],
-			id: Int,
-			kind: String,
-			milestone: Option[String],
-			priority: String,
-			reporter: Option[String],
-			status: String,
-			title: String,
-			updated_on: String,
-			version: Option[String],
-			watchers: List[String],
-			voters: List[String]
-		)
+		implicit val formats = DefaultFormats
 
     	val issues = (parse(fileContent) \ "issues").children
 
-    	// val issuesList = issues.values
-    	// val bbIssues = for(is <- issues) yield is.extract[BBIssue]
 	    val headers = "id,kind,status,priority,title,content,assignee,reporter,created_on,milestone,version,updated_on"
 	    println(headers)
 
-    	for (i <- issues) {
+    	for (i <- issues) { // read JSON structure for each issue and print values out as CSV string
 	    	val assignee = (i \ "assignee").extract[String] match {
 	    		case null => ""
 	    		case e => e
