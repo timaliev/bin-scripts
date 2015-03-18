@@ -9,7 +9,7 @@ import sys.process._
 // For Lift JSON parser
 import net.liftweb.json.DefaultFormats
 import net.liftweb.json._
-import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Base64
 
 object HttpBasicAuth {
    val BASIC = "Basic"
