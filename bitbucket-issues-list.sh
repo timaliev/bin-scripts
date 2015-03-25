@@ -1,7 +1,8 @@
 #!/bin/bash
-exec scala -deprecation -savecompiled -classpath "lib/lift-json_2.11-3.0-SNAPSHOT.jar:lib/paranamer-2.5.6.jar:lib/commons-codec-1.9.jar:lib/grizzled-slf4j_2.11-1.0.2.jar:lib/slf4j-api-1.7.10.jar:lib/slf4j-simple-1.7.10.jar" "$0" "$0" "$@"
+exec scala -toolcp "lib" -deprecation -feature -savecompiled -classpath "lib/lift-json_2.11-3.0-SNAPSHOT.jar:lib/paranamer-2.5.6.jar:lib/commons-codec-1.9.jar:lib/grizzled-slf4j_2.11-1.0.2.jar:lib/slf4j-api-1.7.10.jar:lib/slf4j-simple-1.7.10.jar" "$0" "$0" "$@"
 !#
 
+import scala.language.postfixOps
 import scala.io.Source
 import scala.io.StdIn
 import java.util.Calendar
@@ -14,8 +15,11 @@ import net.liftweb.json._
 import grizzled.slf4j.Logging
 
 import scala.util.{Success, Failure}
-import scala.concurrent._
-import ExecutionContext.Implicits._
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration._
+import scala.collection._
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object HttpBasicAuth {
    val BASIC = "Basic"
@@ -197,9 +201,7 @@ object PrintBibucketIssues extends Logging {
 		val REPO = "semanticplatform/ontologyeditor/"
 		var API_VERSION: Int = 2
 
-		logger.info(Calendar.getInstance().getTime + ": Hello, world")
-
-		def fetchNextPage(bitbucketRepository: String, user: String, pass: String, start: Int = 0, limit: Int = PAGING, api: Int = 1): List[String] = {
+		def fetchNextPage(bitbucketRepository: String, user: String, pass: String, start: Int = 0, limit: Int = PAGING, api: Int = 1): Future[List[String]] = Future {
 
 			val bitbucketApiUrl = api match {
 				case 1 => "https://api.bitbucket.org/1.0/"
@@ -212,38 +214,43 @@ object PrintBibucketIssues extends Logging {
 			val bitbucketIssuesUrl = bitbucketRepositoriesUrl + bitbucketRepository + "issues"
 			val bitbucketIssuesUrlOptions = bitbucketIssuesUrl + "?" + bitbucketIssuesOptions
 
-			logger.info(Calendar.getInstance().getTime + s": Fetching JSON from URL: ${bitbucketIssuesUrlOptions} ...")
+			debug(s"Fetching JSON from URL:\n ${bitbucketIssuesUrlOptions} ...")
 			val connection = new URL(bitbucketIssuesUrlOptions).openConnection
 			connection.setRequestProperty(HttpBasicAuth.AUTHORIZATION, HttpBasicAuth.getHeader(user, pass))
 			Source.fromInputStream(connection.getInputStream).getLines.toList
 		}
 
-		def fetchBitbacketIssues(rep: String, user: String, pass: String, page: Int = 0, results: List[JValue] = Nil): List[JValue] =
+		def fetchBitbacketIssues(rep: String, user: String, pass: String, page: Int = 0, results: List[JValue] = Nil): Future[List[JValue]] =
 			fetchNextPage(rep, user, pass, page * PAGING) flatMap { result =>
-				val issuesNumber = (parse(result) \ "count").extract[Int]
-				val issues = parse(result) \ "issues"
+
+				trace(s"[in fetchBitbacketIssues page ${page} size ${PAGING}] Result for fetchNextPage(rep, user, pass, page * PAGING) flatMap:\n\n ${result}\n")
+				
+				val presult = result map {parse(_)}
+				val issuesNumber = (presult.head \ "count").extract[Int]
+				val issues = presult.head \ "issues"
 				if (issuesNumber > (page + 1) * PAGING)
 					fetchBitbacketIssues(rep, user, pass, page + 1, issues :: results)
 				else
-					issues :: results
+					Future.successful(issues :: results)
 			}
 
 
 		val fileContent : String = args.length match {
 			case 1 => { API_VERSION = 1
 						
-						logger.info(Calendar.getInstance().getTime + ": Getting JSON from BitBucket website.")
+						info("Getting JSON from BitBucket website.")
 						val username = StdIn.readLine(s"Please, enter your BitBucket account user name for [${REPO}] repository: ")
 						print("Please, enter your BitBucket password: ")
 						print(Console.INVISIBLE)
 						val password = StdIn.readLine
 						print(Console.RESET)
-						logger.info(Calendar.getInstance().getTime + ": Fetching, please wait...")
+						info("Fetching, please wait...")
 
-						val r : List[JValue] = fetchBitbacketIssues(REPO, username, password).reverse
-						pretty(render((r.head /: r.tail)(_ merge _)))
+						val rr = fetchBitbacketIssues(REPO, username, password)
+						val r = Await.result(rr, 30 seconds).reverse
+						compact(render((r.head /: r.tail)(_ merge _)))
 			}
-			case 2 => { logger.info(Calendar.getInstance().getTime + ": Reading JSON from File: " + args(1).toString + ".")
+			case 2 => { info("Reading JSON from File: " + args(1).toString)
 						Source.fromFile(args(1)).getLines.mkString
 			}
 			case _ => throw new IllegalArgumentException("Too many arguments.\n\n\tUse:\n\n\t\t" + args(0).toString + " [JSON file name] to read issues from file, or\n\n\t\t" + args(0).toString + " without arguments to read issues from BitBucket's RESTfull API\n")
