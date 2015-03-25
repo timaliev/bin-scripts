@@ -241,7 +241,6 @@ object PrintBibucketIssues extends Logging {
 						logger.info(Calendar.getInstance().getTime + ": Fetching, please wait...")
 
 						val r : List[JValue] = fetchBitbacketIssues(REPO, username, password).reverse
-						
 						pretty(render((r.head /: r.tail)(_ merge _)))
 			}
 			case 2 => { logger.info(Calendar.getInstance().getTime + ": Reading JSON from File: " + args(1).toString + ".")
