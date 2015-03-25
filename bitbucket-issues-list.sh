@@ -198,7 +198,7 @@ object PrintBibucketIssues extends Logging {
 
 		implicit val formats = DefaultFormats
 		val PAGING : Int = 50
-		val REPO = "semanticplatform/ontologyeditor/"
+		var REPO = "semanticplatform/ontologyeditor/"
 		var API_VERSION: Int = 2
 
 		def fetchNextPage(bitbucketRepository: String, user: String, pass: String, start: Int = 0, limit: Int = PAGING, api: Int = 1): Future[List[String]] = Future {
@@ -239,6 +239,11 @@ object PrintBibucketIssues extends Logging {
 			case 1 => { API_VERSION = 1
 						
 						info("Getting JSON from BitBucket website.")
+						val regExp1 = "(.*)/$".r
+						REPO = StdIn.readLine(s"Please, enter BitBucket repository name [press ENTER for default ${REPO}]: ") match {
+							case "" => REPO
+							case s => regExp1.findFirstIn(s).getOrElse(s + "/")
+						}
 						val username = StdIn.readLine(s"Please, enter your BitBucket account user name for [${REPO}] repository: ")
 						print("Please, enter your BitBucket password: ")
 						print(Console.INVISIBLE)
