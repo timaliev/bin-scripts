@@ -6,3 +6,4 @@ Scripts and other programs for everyday use:
 * scala-hello.sh -- general template for Scala shell scripts
 * lib -- libraries used by Scala shell scripts
 * indirect_reference.sh -- demo script of advanced bash feature
+* dispatch_ahttp.scala -- testing Scala [Dispatch](https://github.com/dispatch/reboot) async http library
