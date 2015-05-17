@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"by",
+				"bytesList"
+			],
+			[
 				"fet",
 				"fetchNextPage"
 			],
@@ -63,7 +67,47 @@
 			"file": "bitbucket-issues-list.sh",
 			"settings":
 			{
-				"buffer_size": 9805,
+				"buffer_size": 9707,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "bitbucket-test.sh",
+			"settings":
+			{
+				"buffer_size": 4634,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dispatch_ahttp.sh",
+			"settings":
+			{
+				"buffer_size": 3641,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "indirect_reference.sh",
+			"settings":
+			{
+				"buffer_size": 314,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "pcaphex2text.sh",
+			"settings":
+			{
+				"buffer_size": 2446,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scala-hello.sh",
+			"settings":
+			{
+				"buffer_size": 342,
 				"line_ending": "Unix"
 			}
 		},
@@ -71,15 +115,7 @@
 			"file": "lib/simplelogger.properties",
 			"settings":
 			{
-				"buffer_size": 403,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "script.log",
-			"settings":
-			{
-				"buffer_size": 0,
+				"buffer_size": 404,
 				"line_ending": "Unix"
 			}
 		}
@@ -100,7 +136,7 @@
 	},
 	"console":
 	{
-		"height": 0.0,
+		"height": 188.0,
 		"history":
 		[
 		]
@@ -114,8 +150,19 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
+	"expanded_folders":
+	[
+		"/Users/tima/bin"
+	],
 	"file_history":
 	[
+		"/Users/tima/bin/dispatch_ahttp.scala",
+		"/Users/tima/bin/pcaphex2text.scala",
+		"/Users/tima/bin/script.log",
+		"/Users/tima/dev/Altversa/check-debts.heroku/tmp/fssp/h.txt",
+		"/Users/tima/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/tima/tmp/Preferences.sublime-settings",
+		"/Users/tima/Library/Application Support/Sublime Text 3/Packages/User/Distraction Free.sublime-settings",
 		"/Users/tima/bin/simplelogger.properties",
 		"/Users/tima/bin/bitbucket-test.sh",
 		"/Users/tima/bin/d.csv",
@@ -134,7 +181,7 @@
 	],
 	"find":
 	{
-		"height": 30.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -149,6 +196,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"#!/",
+			"1431543242",
+			"/is/script.js?",
+			"1431",
+			"14313",
+			"143138",
+			"1431389373",
+			"substring",
+			"font",
+			"font_size",
+			"scheme",
+			"utf8",
+			"String",
+			"15",
 			"Result of",
 			"\n	    	",
 			"issues",
@@ -165,13 +226,13 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -180,49 +241,21 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9805,
+						"buffer_size": 9707,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8545,
-								8545
+								178,
+								178
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Scala/Scala.tmLanguage",
 							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 4817.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "lib/simplelogger.properties",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 403,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								97,
-								97
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Java/JavaProperties.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -232,12 +265,41 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "script.log",
+					"buffer": 1,
+					"file": "bitbucket-test.sh",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 4634,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								178,
+								178
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "dispatch_ahttp.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3641,
 						"regions":
 						{
 						},
@@ -250,7 +312,92 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "indirect_reference.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 314,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "pcaphex2text.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2446,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								77,
+								77
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Scala/Scala.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "scala-hello.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 342,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								178,
+								178
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -258,13 +405,41 @@
 					},
 					"stack_index": 1,
 					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "lib/simplelogger.properties",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 404,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								98,
+								98
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Java/JavaProperties.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
 				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 30.0
+		"height": 29.0
 	},
 	"input":
 	{
@@ -305,7 +480,7 @@
 	"project": "bin_scripts.sublime-project",
 	"replace":
 	{
-		"height": 56.0
+		"height": 54.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -343,7 +518,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 109.0,
+	"side_bar_width": 207.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
