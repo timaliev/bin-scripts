@@ -1,5 +1,11 @@
 #!/bin/bash
-exec scala -toolcp "lib" -deprecation -feature -savecompiled -classpath "lib/lift-json_2.11-3.0-SNAPSHOT.jar:lib/paranamer-2.5.6.jar:lib/commons-codec-1.9.jar:lib/grizzled-slf4j_2.11-1.0.2.jar:lib/slf4j-api-1.7.10.jar:lib/slf4j-simple-1.7.10.jar" "$0" "$0" "$@"
+L=`stat -f $0`
+L=`dirname $L`/lib
+cp="`echo ${L}/*.jar | sed 's/ /:/g'`"
+
+exec scala -toolcp ${L} -deprecation -feature -savecompiled -classpath $cp $0 $0 $@
+
+exit
 !#
 
 import scala.language.postfixOps

@@ -1,5 +1,11 @@
 #!/bin/bash
-exec scala -savecompiled -classpath "lib/lift-json_2.11-3.0-SNAPSHOT.jar:lib/commons-codec-1.9.jar:lib/httpclient-4.4.jar:lib/commons-logging-1.2.jar:lib/logback-core-1.1.2.jar:lib/slf4j-1.7.10/slf4j-api-1.7.10.jar:lib/slf4j-1.7.10/slf4j-simple-1.7.10.jar" "$0" "$0" "$@"
+L=`stat -f $0`
+L=`dirname $L`/lib
+cp="`echo ${L}/*.jar | sed 's/ /:/g'`"
+
+exec scala -toolcp ${L} -deprecation -feature -savecompiled -classpath $cp $0 $0 $@
+
+exit
 !#
 
 import scala.io.Source
