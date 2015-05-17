@@ -1,6 +1,11 @@
 #!/bin/bash
-#exec scala -Ylog-classpath -toolcp "lib" -deprecation -feature -savecompiled -classpath "lib/lift-json_2.11-3.0-SNAPSHOT.jar:lib/paranamer-2.5.6.jar:lib/commons-codec-1.9.jar:lib/grizzled-slf4j_2.11-1.0.2.jar:lib/slf4j-api-1.7.10.jar:lib/slf4j-simple-1.7.10.jar:lib/httpclient-4.4.jar:lib/dispatch-core_2.11-0.11.2.jar" "$0" "$0" "$@"
-exec scala -toolcp "lib" -deprecation -feature -savecompiled -classpath "lib/lift-json_2.11-3.0-SNAPSHOT.jar:lib/paranamer-2.5.6.jar:lib/commons-codec-1.9.jar:lib/grizzled-slf4j_2.11-1.0.2.jar:lib/slf4j-api-1.7.10.jar:lib/slf4j-simple-1.7.10.jar:lib/async-http-client-1.8.15.jar:lib/netty-3.2.10.Final.jar:lib/dispatch-core_2.10-0.11.2.jar" "$0" "$0" "$@"
+L=`stat -f $0`
+L=`dirname $L`/lib
+cp="`echo ${L}/*.jar | sed 's/ /:/g'`"
+
+exec scala -toolcp ${L} -deprecation -feature -savecompiled -classpath $cp $0 $0 $@
+
+exit
 !#
 
 import scala.language.postfixOps
@@ -30,11 +35,11 @@ object DispatchAHTTP extends Logging {
 
 	def httpRequest(par: HttpParameters): Future[String] = {
 
-		val request = par.method match {
+		val res = par.method match {
 			case "GET" => {
 				val r = url(par.url)
 				debug(s"Set method to GET, URL to ${par.url}, request to ${r}")
-				r
+				Http(r OK as.String.utf8)
 			}
 			case "POST" => {
 				val q = """ "query" """
@@ -53,16 +58,17 @@ object DispatchAHTTP extends Logging {
 					// addCookie("VPSESSID=gvb277n2cgada5pcb7epu8g4f6").
 					setBody(rBody)
 				debug(s"Set method to POST, URL to ${par.url}, request to ${r}, request body to\n ${rBody}")
-				r
+				Http(r OK as.String.utf8) //.map {
+					
+				//}
 			}
 			case _ =>{
 				val r = url(par.url).setMethod(par.method)
 				debug(s"Set method to ${par.method}, URL to ${par.url}, request to ${r}")
-				r
+				Http(r OK as.String.utf8)
 			}
 		}
-		// Http(request OK as.String.utf8)
-		Http(request OK as.String.utf8)
+		res
 	}
 
 	def main(args: Array[String])  {
