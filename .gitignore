@@ -9,4 +9,6 @@ tutorial/
 /.vscode/
 .metals/
 .scala-build/
+.nextflow/
+/work/
 
