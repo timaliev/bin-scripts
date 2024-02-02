@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+export files=$(git ls-tree -r master --name-only)
+export rep=$(git remote -v|head -1|cut -f2 | cut -d. -f1,2)/blob/master
+
+echo
+echo '## Release Notes'
+echo
+
+for i in ${files}
+do
+  echo "[${i}](${rep}/${i})"
+  git log --pretty=format:'* %h : %s' $i
+  echo
+  echo
+done

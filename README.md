@@ -1,3 +1,4 @@
+[//]: # (SPDX-License-Identifier: MIT)
 # bin-scripts
 Scripts and other programs for everyday use:
 

@@ -37,17 +37,17 @@ object pcapConverter extends Logging {
  * ...
 */
   def getHexSubstring(l: List[String]): List[Byte] = {
-  	debug(s"In getHexSubstring(l: List[String])")
+  	trace(s"In getHexSubstring(l: List[String])")
   	val rex = "^\\s{4}[0-9A-Fa-f]{8}".r // Four spaces followed by eight digits
   	l.flatMap { str =>
-  		debug(s"String = [${str}]")
+  		trace(s"String = [${str}]")
 	  	val substr = rex.findFirstIn(str) match {
 	  		case Some(s) => str.substring(14,62)
 	  		case None => str.substring(10,58)
 	  	}
-		debug(s"Converted [${str}] to [${substr}] ...")
+		trace(s"Converted [${str}] to [${substr}] ...")
 		val bytesArr = hex2bytes(substr)
-		debug(s"... and to ${bytesArr.mkString("[", ":","]")}")
+		trace(s"... and to ${bytesArr.mkString("[", ":","]")}")
 		bytesArr
   	}
   }
@@ -55,18 +55,19 @@ object pcapConverter extends Logging {
 	def start(args: Array[String])  {
 
 		val fileContent : List[String] = args.length match {
-			case 2 => { info("Reading hexadecimal PCAP dump from File: " + args(1).toString)
+			case 3 => { info("Reading hexadecimal PCAP dump from File: " + args(1).toString)
+						info(s"Encoding is set to ${args(2).toString}")
 						Source.fromFile(args(1)).getLines.toList
 			}
-			case _ => throw new IllegalArgumentException("Too many or too little arguments.\n\n\tUse:\n\n\t\t" + args(0).toString + " [File name of Hexadecimal text dump from PCAP] to convert it to UTF-8 text\n\n")
+			case _ => throw new IllegalArgumentException("Too many or too little arguments.\n\n\tUse:\n\n\t\t" + args(0).toString + "[File name of Hexadecimal text dump from PCAP] [Encoding of the file (for example, windows-1251)] \n\n")
 		}
 		val bytesList = getHexSubstring(fileContent)
-		debug(s"Got List of Bytes $bytesList")
+		trace(s"Got List of Bytes $bytesList")
 		val res = bytesList.map { b =>
 			b.toChar
 		}
 		val bytesArray = bytesList.toArray
-		val res2 = new String(bytesArray,"windows-1251")
+		val res2 = new String(bytesArray, args(2).toString)
 		println(s"${res2}")
 	}
 }

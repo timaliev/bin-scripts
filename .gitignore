@@ -1,5 +1,12 @@
+!/lib/*.properties
 lib/
+examples/
+tutorial/
 *.jar
+*.cache
 *.log
 *.json
+/.vscode/
+.metals/
+.scala-build/
 

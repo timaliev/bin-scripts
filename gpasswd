@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# default number of symbols
+NCHARS=16
+
+if [ $# -gt 1 ]; then
+  echo Usage: $(basename $0) [n] where n is number of symbols in password
+else
+  if [ $# -gt 0 -a -z "$(echo $1 | egrep ^[0-9]+$)" ]; then
+    echo Usage: $(basename $0) [n] where n is number of symbols in password, more then 7
+  else
+    if [ $# -gt 0 ]; then
+      if [ $1 -lt 8 ]; then
+        echo Usage: $(basename $0) [n] where n is number of symbols in password, more then 7
+      else
+        LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c $1 | xargs
+      fi
+    else
+      LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c $NCHARS | xargs
+    fi
+  fi
+fi
