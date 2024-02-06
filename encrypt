@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+L=$(stat -f $0)
+scriptname=$(basename $L)
+
+function die() {
+  echo -e $1
+  exit 127
+}
+
+if [ $# -ne 1 ]; then
+  echo -e "Usage: ${scriptname} <file>"
+  echo
+  echo -e "Please specify exectly one file to be encrypted"
+  echo -e "Encrypted file will be in the current directory with .age extension"
+  exit 127
+fi
+  
+[ -f $1 ] && [ ! -f ${1}.age ] && \
+  curl -s https://github.com/timaliev.keys | \
+    age -e -R - -o ${1}.age $1 || \
+  die "Error. No such file (${1}) or file ${1}.age exists."
+ERR=$?
+[ -f ${1}.age ] && echo "Created encrypted file: ${1}.age "
+exit $?

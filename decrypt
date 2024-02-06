@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# set -xv
+set -Eeuo pipefail
+L=$(stat -f $0)
+scriptname=$(basename $L)
+
+function die() {
+  echo -e $1
+  exit 127
+}
+
+if [ $# -ne 1 -o -z "$(echo $1 | grep -E '\.age$')" ] ; then
+  echo -e "Usage: ${scriptname} <file.age>"
+  echo
+  echo -e "Please specify exectly one file to be decrypted with .age extension"
+  echo -e "Decrypted file will be in the current directory without .age extension"
+  exit 127
+fi
+
+file=$(echo $1 | sed -E 's/\.age$//')
+[ -f $1 ] && [ -n "$file" ] && [ ! -f "$file" ] && \
+  age -d -i ~/.ssh/id_ed25519 -o ${file} $1 || \
+  die "Error. No such file (${1}) or file ${file} exists or age error."
+ERR=$?
+[ -f ${file} ] && echo "Created decrypted file: ${file}"
+exit "$?"
