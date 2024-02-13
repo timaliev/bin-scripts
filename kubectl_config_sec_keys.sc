@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # (SPDX-License-Identifier: MIT)
-# Based on this note: http://dev.bizo.com/2009/07/dependency-management-for-scala-scripts-using-ivy.html
+# Ivy libraries load is based on this note: http://dev.bizo.com/2009/07/dependency-management-for-scala-scripts-using-ivy.html
 #
 # Use -ivy parameter to invoke ivy and download/update libraries
 # Alternativly delete classpath cache file in ./lib/${scriptname}-classpath.cache
@@ -165,7 +165,7 @@ object replaceKeysToFiles extends App with Logging {
     case Right(pathsDir) => {
       logger.info(s"Created secure directory for keys: ${pathsDir}")
       pathsDir
-    } 
+    }
     case Left(e) => e match {
       case e: java.nio.file.FileAlreadyExistsException =>
       {
@@ -190,7 +190,7 @@ object replaceKeysToFiles extends App with Logging {
 
   logger.debug(s"Got kubectl configuration file: ${kubeConfigJson.toString.slice(0,50) + "..."}")
 
-  // 
+  //
   val cursor: HCursor = kubeConfigJson.hcursor
   val clustersArray = cursor.root.downField("clusters").focus.flatMap(_.asArray).getOrElse(Vector.empty)
   clustersArray.isEmpty match
@@ -208,9 +208,8 @@ object replaceKeysToFiles extends App with Logging {
   clustersAuthDataMap.filter((_, v) => v != "") match
     case m: Map[String, String] if m.isEmpty => logger.info(s"No certificate-authority-data for any cluster in kubeconfig file")
     case m: Map[String, String] if ! m.isEmpty => writeKeyFiles(m, kubeConfigKeysDir)
-  
+
   // Replace certificate-authority-data in kubeconfig with
   //certificate-authority fields with keys' file names as values
-  val changedJson = cursor.root.downField("clusters").
 
 }
