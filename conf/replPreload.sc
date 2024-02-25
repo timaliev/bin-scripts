@@ -5,19 +5,15 @@
 // 
 import scala.language.postfixOps
 import scala.util.{Try, Success, Failure}
-import java.lang.System
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.File
-import java.nio.file.{Path, Paths, Files}
-import java.nio.file.attribute.{FileAttribute, PosixFilePermission, PosixFilePermissions}
+
 import io.circe._
 import io.circe.yaml
 import io.circe.yaml._
 // import org.apache.logging.log4j.scala.Logging
 // import org.apache.logging.log4j.scala.Logger
 // import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.{LogManager, Logger}
+// import org.apache.logging.log4j.{LogManager, Logger}
+import com.typesafe.scalalogging._
 
-val logger = LogManager.getLogger("REPL")
+val logger = Logger("REPL")
 logger.info("Loggin in REPL enabled")
