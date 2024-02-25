@@ -13,7 +13,7 @@
     </encoder>
   </appender>
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>log/script.log</file>
+    <file>${HOME}/bin/log/script.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>logFile%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
